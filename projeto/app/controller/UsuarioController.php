@@ -4,7 +4,7 @@ require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
-require_once(__DIR__ . "/../model/enum/UsuarioPapel.php");
+require_once(__DIR__ . "/../model/enum/UsuarioTipo.php");
 
 class UsuarioController extends Controller {
 
@@ -13,8 +13,8 @@ class UsuarioController extends Controller {
 
     //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
-        if(! $this->usuarioLogado())
-            exit;
+        //if(! $this->usuarioLogado())
+        //    exit;
 
         $this->usuarioDao = new UsuarioDAO();
         $this->usuarioService = new UsuarioService();
@@ -34,17 +34,17 @@ class UsuarioController extends Controller {
         //Captura os dados do formulário
         $dados["id"] = isset($_POST['id']) ? $_POST['id'] : 0;
         $nome = trim($_POST['nome']) ? trim($_POST['nome']) : NULL;
-        $login = trim($_POST['login']) ? trim($_POST['login']) : NULL;
+        $email = trim($_POST['email']) ? trim($_POST['email']) : NULL;
         $senha = trim($_POST['senha']) ? trim($_POST['senha']) : NULL;
         $confSenha = trim($_POST['conf_senha']) ? trim($_POST['conf_senha']) : NULL;
-        $papel = trim($_POST['papel']) ? trim($_POST['papel']) : NULL;
+        $tipo = UsuarioTipo::LEITOR;
 
         //Cria objeto Usuario
         $usuario = new Usuario();
         $usuario->setNome($nome);
-        $usuario->setLogin($login);
+        $usuario->setEmail($email);
         $usuario->setSenha($senha);
-        $usuario->setPapel($papel);
+        $usuario->setTipo($tipo);
 
         //Validar os dados
         $erros = $this->usuarioService->validarDados($usuario, $confSenha);
@@ -59,12 +59,11 @@ class UsuarioController extends Controller {
                     $this->usuarioDao->update($usuario);
                 }
 
-                //TODO - Enviar mensagem de sucesso
-                $msg = "Usuário salvo com sucesso.";
-                $this->list("", $msg);
+                header("Location: " . LOGIN_PAGE);
                 exit;
             } catch (PDOException $e) {
-                $erros = "[Erro ao salvar o usuário na base de dados.]";                
+                $erros = ["Erro ao salvar o usuário na base de dados."];   
+                //print_r($e);             
             }
         }
 
@@ -73,7 +72,7 @@ class UsuarioController extends Controller {
         //Carregar os valores recebidos por POST de volta para o formulário
         $dados["usuario"] = $usuario;
         $dados["confSenha"] = $confSenha;
-        $dados["papeis"] = UsuarioPapel::getAllAsArray();
+        $dados["tipo"] = UsuarioTipo::getAllAsArray();
 
         $msgsErro = implode("<br>", $erros);
         $this->loadView("usuario/form.php", $dados, $msgsErro);
@@ -84,7 +83,7 @@ class UsuarioController extends Controller {
         //echo "Chamou o método create!";
 
         $dados["id"] = 0;
-        $dados["papeis"] = UsuarioPapel::getAllAsArray(); 
+        $dados["tipo"] = UsuarioTipo::getAllAsArray(); 
         $this->loadView("usuario/form.php", $dados);
     }
 
@@ -98,7 +97,7 @@ class UsuarioController extends Controller {
             //Setar os dados
             $dados["id"] = $usuario->getId();
             $dados["usuario"] = $usuario;
-            $dados["papeis"] = UsuarioPapel::getAllAsArray(); 
+            $dados["tipo"] = UsuarioTipo::getAllAsArray(); 
 
             $this->loadView("usuario/form.php", $dados);
         } else 

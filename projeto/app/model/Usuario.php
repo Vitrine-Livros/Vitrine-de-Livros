@@ -2,22 +2,15 @@
 #Nome do arquivo: Usuario.php
 #Objetivo: classe Model para Usuario
 
-require_once(__DIR__ . "/enum/UsuarioPapel.php");
+require_once(__DIR__ . "/enum/UsuarioTipo.php");
 
-class Usuario implements JsonSerializable {
+class Usuario {
 
     private ?int $id;
     private ?string $nome;
-    private ?string $login;
+    private ?string $email;
     private ?string $senha;
-    private ?string $papel;
-
-    public function jsonSerialize(): array {
-        return array("id" => $this->id,
-                     "nome" => $this->nome,
-                     "login" => $this->login,
-                     "papel" => $this->papel);
-    }
+    private ?string $tipo;
 
     public function getId(): ?int
     {
@@ -43,17 +36,7 @@ class Usuario implements JsonSerializable {
         return $this;
     }
 
-    public function getLogin(): ?string
-    {
-        return $this->login;
-    }
-
-    public function setLogin(?string $login): self
-    {
-        $this->login = $login;
-
-        return $this;
-    }
+   
 
     public function getSenha(): ?string
     {
@@ -67,14 +50,26 @@ class Usuario implements JsonSerializable {
         return $this;
     }
 
-    public function getPapel(): ?string
+    public function getTipo(): ?string
     {
-        return $this->papel;
+        return $this->tipo;
     }
 
-    public function setPapel(?string $papel): self
+    public function setTipo(?string $tipo): self
     {
-        $this->papel = $papel;
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): self
+    {
+        $this->email = $email;
 
         return $this;
     }

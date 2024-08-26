@@ -11,7 +11,7 @@ class UsuarioDAO {
     public function list() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u ORDER BY u.nome_usuario";
+        $sql = "SELECT * FROM usuario u ORDER BY u.nome_usuario";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
@@ -23,7 +23,7 @@ class UsuarioDAO {
     public function findById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u" .
+        $sql = "SELECT * FROM usuario u" .
                " WHERE u.id_usuario = ?";
         $stm = $conn->prepare($sql);    
         $stm->execute([$id]);
@@ -45,7 +45,7 @@ class UsuarioDAO {
     public function findByLoginSenha(string $login, string $senha) {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u" .
+        $sql = "SELECT * FROM usuario u" .
                " WHERE BINARY u.login = ?";
         $stm = $conn->prepare($sql);    
         $stm->execute([$login]);
@@ -70,15 +70,15 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, papel)" .
-               " VALUES (:nome, :login, :senha, :papel)";
+        $sql = "INSERT INTO usuario (nome, email, senha, tipo)" .
+               " VALUES (:nome, :email, :senha, :tipo)";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
+        $stm->bindValue("email", $usuario->getEmail());
         $senhaCript = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
         $stm->bindValue("senha", $senhaCript);
-        $stm->bindValue("papel", $usuario->getPapel());
+        $stm->bindValue("tipo", $usuario->getTipo());
         $stm->execute();
     }
 
@@ -86,16 +86,14 @@ class UsuarioDAO {
     public function update(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE usuarios SET nome_usuario = :nome, login = :login," . 
-               " senha = :senha, papel = :papel" .   
+        $sql = "UPDATE usuario SET nome = :nome, email = :email, senha = :senha" .   
                " WHERE id_usuario = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
+        $stm->bindValue("email", $usuario->getEmail());
         $senhaCript = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
         $stm->bindValue("senha", $senhaCript);
-        $stm->bindValue("papel", $usuario->getPapel());
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();
     }
@@ -104,7 +102,7 @@ class UsuarioDAO {
     public function deleteById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "DELETE FROM usuarios WHERE id_usuario = :id";
+        $sql = "DELETE FROM usuario WHERE id_usuario = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("id", $id);
@@ -114,7 +112,7 @@ class UsuarioDAO {
     public function count() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT COUNT(*) total FROM usuarios";
+        $sql = "SELECT COUNT(*) total FROM usuario";
         $stm = $conn->prepare($sql);
         $stm->execute();
         $result = $stm->fetchAll();
@@ -128,10 +126,10 @@ class UsuarioDAO {
         foreach ($result as $reg) {
             $usuario = new Usuario();
             $usuario->setId($reg['id_usuario']);
-            $usuario->setNome($reg['nome_usuario']);
-            $usuario->setLogin($reg['login']);
+            $usuario->setNome($reg['nome']);
+            $usuario->setEmail($reg['email']);
             $usuario->setSenha($reg['senha']);
-            $usuario->setPapel($reg['papel']);
+            $usuario->setTipo($reg['tipo']);
             array_push($usuarios, $usuario);
         }
 

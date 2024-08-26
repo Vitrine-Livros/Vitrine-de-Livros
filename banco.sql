@@ -7,6 +7,7 @@ CREATE TABLE usuario (
   tipo ENUM('ADMINSTRADOR', 'LEITOR') NOT NULL,
   PRIMARY KEY (id_usuario) 
 );
+ALTER TABLE usuario ADD CONSTRAINT uk_usuario UNIQUE(email);
 
 CREATE TABLE genero ( 
   id_genero  int  NOT NULL AUTO_INCREMENT,  

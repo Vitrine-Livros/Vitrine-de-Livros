@@ -28,8 +28,15 @@ require_once(__DIR__ . "/../include/header.php");
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
 
-                    <button type="submit" class="btn btn-success">Logar</button>
+                    <div>
+                       <button type="submit" class="btn btn-success">Logar</button>
+                    </div>
+
                 </form>
+            </div>
+
+            <div>
+                <a href="<?= BASEURL ?>/controller/UsuarioController.php?action=create">Não possui cadastro? Clique aqui</a>
             </div>
         </div>
 

@@ -3,12 +3,10 @@
 #Objetivo: interface para listagem dos usuários do sistema
 
 require_once(__DIR__ . "/../include/header.php");
-require_once(__DIR__ . "/../include/menu.php");
 ?>
 
 <h3 class="text-center">
-    <?php if($dados['id'] == 0) echo "Inserir"; else echo "Alterar"; ?> 
-    Usuário
+    Faça seu cadastro
 </h3>
 
 <div class="container">
@@ -26,10 +24,10 @@ require_once(__DIR__ . "/../include/menu.php");
                 </div>
                 
                 <div class="form-group">
-                    <label for="txtLogin">Login:</label>
-                    <input class="form-control" type="text" id="txtLogin" name="login" 
-                        maxlength="15" placeholder="Informe o login"
-                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getLogin() : ''); ?>"/>
+                    <label for="txtLogin">Email:</label>
+                    <input class="form-control" type="text" id="txtLogin" name="email" 
+                        maxlength="100" placeholder="Informe o email"
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>"/>
                 </div>
 
                 <div class="form-group">
@@ -46,23 +44,6 @@ require_once(__DIR__ . "/../include/menu.php");
                         value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '';?>"/>
                 </div>
 
-                <div class="form-group">
-                    <label>Papel</label>
-                    <select class="form-control" name="papel" id="selPapel">
-                        <option value="">Selecione o papel</option>
-                        <?php foreach($dados["papeis"] as $papel): ?>
-                            <option value="<?= $papel ?>" 
-                                <?php 
-                                    if(isset($dados["usuario"]) && $dados["usuario"]->getPapel() == $papel) 
-                                        echo "selected";
-                                ?>    
-                            >
-                                <?= $papel ?>
-                            </option>
-                        <?php endforeach; ?>
-
-                    </select>
-                </div>
 
                 <input type="hidden" id="hddId" name="id" 
                     value="<?= $dados['id']; ?>" />
@@ -80,7 +61,7 @@ require_once(__DIR__ . "/../include/menu.php");
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
         <a class="btn btn-secondary" 
-                href="<?= BASEURL ?>/controller/UsuarioController.php?action=list">Voltar</a>
+                href="<?= LOGIN_PAGE ?>">Voltar</a>
         </div>
     </div>
 </div>
