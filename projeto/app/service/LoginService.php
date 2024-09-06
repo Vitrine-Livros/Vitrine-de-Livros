@@ -11,7 +11,7 @@ class LoginService {
 
         //Valida o campo nome
         if(! $login)
-            array_push($arrayMsg, "O campo [Login] é obrigatório.");
+            array_push($arrayMsg, "O campo [Email] é obrigatório.");
 
         //Valida o campo login
         if(! $senha)
@@ -27,7 +27,8 @@ class LoginService {
         //Setar usuário na sessão do PHP
         $_SESSION[SESSAO_USUARIO_ID]   = $usuario->getId();
         $_SESSION[SESSAO_USUARIO_NOME] = $usuario->getNome();
-        $_SESSION[SESSAO_USUARIO_PAPEL] = $usuario->getPapel();
+        $_SESSION[SESSAO_USUARIO_EMAIL] = $usuario->getEmail();
+        $_SESSION[SESSAO_USUARIO_TIPO] = $usuario->getTipo();
     }
 
     public function removerUsuarioSessao() {

@@ -11,7 +11,7 @@ class UsuarioDAO {
     public function list() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuario u ORDER BY u.nome_usuario";
+        $sql = "SELECT * FROM usuario u ORDER BY u.nome";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
@@ -41,14 +41,14 @@ class UsuarioDAO {
     }
 
 
-    //Método para buscar um usuário por seu login e senha
-    public function findByLoginSenha(string $login, string $senha) {
+    //Método para buscar um usuário por seu email e senha
+    public function findByEmailSenha(string $email, string $senha) {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM usuario u" .
-               " WHERE BINARY u.login = ?";
+               " WHERE BINARY u.email = ?";
         $stm = $conn->prepare($sql);    
-        $stm->execute([$login]);
+        $stm->execute([$email]);
         $result = $stm->fetchAll();
 
         $usuarios = $this->mapUsuarios($result);
@@ -62,7 +62,7 @@ class UsuarioDAO {
         } elseif(count($usuarios) == 0)
             return null;
 
-        die("UsuarioDAO.findByLoginSenha()" . 
+        die("UsuarioDAO.findByEmailSenha()" . 
             " - Erro: mais de um usuário encontrado.");
     }
 
