@@ -24,7 +24,7 @@ require_once(__DIR__ . "/../include/header.php");
                 </div>
                 
                 <div class="form-group">
-                    <label for="txtLogin">Email:</label>
+                    <label for="txtEmail">Email:</label>
                     <input class="form-control" type="text" id="txtLogin" name="email" 
                         maxlength="100" placeholder="Informe o email"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>"/>

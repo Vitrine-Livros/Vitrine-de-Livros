@@ -15,6 +15,13 @@ CREATE TABLE genero (
   PRIMARY KEY (id_genero) 
 );
 
+/* Inserir os gêneros */
+INSERT INTO genero (nome) VALUES ('Ação');
+INSERT INTO genero (nome) VALUES ('Aventura');
+INSERT INTO genero (nome) VALUES ('Fantasia');
+INSERT INTO genero (nome) VALUES ('Drama');
+INSERT INTO genero (nome) VALUES ('Terror');
+
 CREATE TABLE livro ( 
   id_livro int  NOT NULL AUTO_INCREMENT,
   nome varchar(100) NOT NULL, 
@@ -30,7 +37,6 @@ CREATE TABLE livro (
 ALTER TABLE livro ADD CONSTRAINT fk_livro_genero 
 FOREIGN KEY (id_genero) REFERENCES genero (id_genero);
 
---Parei aqui
 CREATE TABLE livro_curtido ( 
   id_livro_curtido int AUTO_INCREMENT, 
   id_livro int, 

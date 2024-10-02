@@ -20,6 +20,10 @@ if(isset($_SESSION[SESSAO_USUARIO_NOME]))
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" 
                         href="<?= BASEURL . '/controller/UsuarioController.php?action=list' ?>">Usuários</a>
+
+                    <a class="dropdown-item" 
+                        href="<?= BASEURL . '/controller/LivroController.php?action=list' ?>">Livro</a>
+
                     <a class="dropdown-item" href="#">Outro cadastro</a>
                 </div>
             </li>
