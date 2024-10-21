@@ -32,9 +32,9 @@ require_once(__DIR__ . "/../include/menu.php");
                         <th>AnoLancamento</th>
                         <th>Editora</th>
                         <th>Gênero</th>
-                        <th>IdFoto</th>
-                        <th>IdLinkCompra</th>
-                        <th>IdResumo</th>
+                        <th>Foto</th>
+                        <th>LinkCompra</th>
+                        <th>Resumo</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -56,8 +56,8 @@ require_once(__DIR__ . "/../include/menu.php");
                                 Alterar</a> 
                             </td>
                             <td><a class="btn btn-danger" 
-                                onclick="return confirm('Confirma a exclusão do usuário?');"
-                                href="<?= BASEURL ?>/controller/UsuarioController.php?action=delete&id=<?= $livro->getId() ?>">
+                                onclick="return confirm('Confirma a exclusão do livro?');"
+                                href="<?= BASEURL ?>/controller/LivroController.php?action=delete&id=<?= $livro->getId() ?>">
                                 Excluir</a> 
                             </td>
                         </tr>

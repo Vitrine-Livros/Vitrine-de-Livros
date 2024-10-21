@@ -21,6 +21,12 @@ INSERT INTO genero (nome) VALUES ('Aventura');
 INSERT INTO genero (nome) VALUES ('Fantasia');
 INSERT INTO genero (nome) VALUES ('Drama');
 INSERT INTO genero (nome) VALUES ('Terror');
+INSERT INTO genero (nome) VALUES ('Artes Marciais');
+INSERT INTO genero (nome) VALUES ('Comedia');
+INSERT INTO genero (nome) VALUES ('Comedia Romantica');
+INSERT INTO genero (nome) VALUES ('Drama');
+INSERT INTO genero (nome) VALUES ('Romance');
+INSERT INTO genero (nome) VALUES ('Ficção Científica');
 
 CREATE TABLE livro ( 
   id_livro int  NOT NULL AUTO_INCREMENT,

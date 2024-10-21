@@ -3,11 +3,10 @@
 #Objetivo: interface para listagem dos usuários do sistema
 
 require_once(__DIR__ . "/../include/header.php");
-require_once(__DIR__ . "/../include/menu.php");
 ?>
 
 <h3 class="text-center">
-    Cadastro de usuário
+    Faça seu cadastro
 </h3>
 
 <div class="container">
@@ -63,7 +62,7 @@ require_once(__DIR__ . "/../include/menu.php");
         <div class="col-12">
         
         <a class="btn btn-secondary" 
-                href="<?= BASEURL ?>/controller/UsuarioController.php?action=list">Voltar</a>
+                href="<?= LOGIN_PAGE ?>">Voltar</a>
         </div>
     </div>
 </div>

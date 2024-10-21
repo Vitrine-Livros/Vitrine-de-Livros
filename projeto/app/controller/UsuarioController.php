@@ -13,9 +13,6 @@ class UsuarioController extends Controller {
 
     //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
-        //if(! $this->usuarioLogado())
-        //    exit;
-
         $this->usuarioDao = new UsuarioDAO();
         $this->usuarioService = new UsuarioService();
 
@@ -23,6 +20,11 @@ class UsuarioController extends Controller {
     }
 
     protected function list(string $msgErro = "", string $msgSucesso = "") {
+        if(! $this->usuarioLogado())
+            exit;
+
+        //Tratar para apenas ADMIN listar os usuário
+
         $usuarios = $this->usuarioDao->list();
         //print_r($usuarios);
         $dados["lista"] = $usuarios;
@@ -59,7 +61,10 @@ class UsuarioController extends Controller {
                     $this->usuarioDao->update($usuario);
                 }
 
-                header("Location: " . LOGIN_PAGE);
+                if($this->usuarioLogadoStatus())
+                    $this->list("", "Usuário cadastrado com sucesso.");
+                else
+                    header("Location: " . LOGIN_PAGE);
                 exit;
             } catch (PDOException $e) {
                 $erros = ["Erro ao salvar o usuário na base de dados."];   
@@ -75,12 +80,26 @@ class UsuarioController extends Controller {
         $dados["tipo"] = UsuarioTipo::getAllAsArray();
 
         $msgsErro = implode("<br>", $erros);
-        $this->loadView("usuario/form.php", $dados, $msgsErro);
+
+        if($this->usuarioLogadoStatus())
+            $this->loadView("usuario/form.php", $dados, $msgsErro);
+        else 
+            $this->loadView("usuario/form_auto_cadastro.php", $dados, $msgsErro);
+    }
+
+    //Método create
+    protected function autoCadastro() {
+        //Chamada para autoCadastro
+
+        $dados["id"] = 0;
+        $dados["tipo"] = UsuarioTipo::getAllAsArray(); 
+        $this->loadView("usuario/form_auto_cadastro.php", $dados);
     }
 
     //Método create
     protected function create() {
-        //echo "Chamou o método create!";
+        if(! $this->usuarioLogado())
+            exit;
 
         $dados["id"] = 0;
         $dados["tipo"] = UsuarioTipo::getAllAsArray(); 
@@ -89,6 +108,9 @@ class UsuarioController extends Controller {
 
     //Método edit
     protected function edit() {
+        if(! $this->usuarioLogado())
+            exit;
+
         $usuario = $this->findUsuarioById();
         
         if($usuario) {
@@ -106,6 +128,9 @@ class UsuarioController extends Controller {
 
     //Método para excluir
     protected function delete() {
+        if(! $this->usuarioLogado())
+            exit;
+
         $usuario = $this->findUsuarioById();
         if($usuario) {
             //Excluir

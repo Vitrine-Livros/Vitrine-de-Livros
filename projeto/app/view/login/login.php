@@ -36,7 +36,7 @@ require_once(__DIR__ . "/../include/header.php");
             </div>
 
             <div>
-                <a href="<?= BASEURL ?>/controller/UsuarioController.php?action=create">Não possui cadastro? Clique aqui</a>
+                <a href="<?= BASEURL ?>/controller/UsuarioController.php?action=autoCadastro">Não possui cadastro? Clique aqui</a>
             </div>
         </div>
 
