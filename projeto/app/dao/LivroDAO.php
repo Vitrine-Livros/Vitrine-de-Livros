@@ -4,6 +4,7 @@
 
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Livro.php");
+include_once(__DIR__ . "/../model/Genero.php");
 
 class LivroDAO
 {
@@ -86,11 +87,11 @@ class LivroDAO
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $livro->getNome());
         $stm->bindValue("autores", $livro->getAutores());
-        $stm->bindValue("anoLancamento", $livro->getAnoLancamento());
+        $stm->bindValue("ano_lancamento", $livro->getAnoLancamento());
         $stm->bindValue("editora", $livro->getEditora());
-        $stm->bindValue("idGenero", $livro->getGenero()->getId());
+        $stm->bindValue("id_genero", $livro->getGenero()->getId());
         $stm->bindValue("foto", $livro->getFoto());
-        $stm->bindValue("linkCompra", $livro->getLinkCompra());
+        $stm->bindValue("link_compra", $livro->getLinkCompra());
         $stm->bindValue("resumo", $livro->getResumo());
         $stm->execute();
     }

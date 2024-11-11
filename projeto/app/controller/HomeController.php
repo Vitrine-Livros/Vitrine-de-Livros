@@ -1,11 +1,11 @@
 <?php
 
 require_once(__DIR__ . "/Controller.php");
-require_once(__DIR__ . "/../dao/UsuarioDAO.php");
+require_once(__DIR__ . "/../dao/LivroDAO.php");
 
 class HomeController extends Controller {
 
-    private UsuarioDAO $usuarioDao;
+    private LivroDAO $livroDao;
 
     public function __construct() {
         //Testar se o usuário está logado
@@ -14,18 +14,19 @@ class HomeController extends Controller {
         }
 
         //Criar o objeto do UsuarioDAO
-        $this->usuarioDao = new UsuarioDAO();
+        $this->livroDao = new LivroDAO();
 
         $this->handleAction();       
     }
 
     protected function home() {
-        $totalUsuarios = $this->usuarioDao->count();
-        $listaUsuario = $this->usuarioDao->list();    
+        //Carregar a lista de livros
+        //1- Buscar os livros do banco de dados (LivroDAO)
 
-        $dados["totalUsuarios"] = $totalUsuarios;
-        $dados["listaUsuarios"] = $listaUsuario;
+        $dados['livros'] = array();
+        $dados['livros'] = $this->livroDao->list();
 
+        
         //echo "<pre>" . print_r($dados, true) . "</pre>";
         $this->loadView("home/home.php", $dados);
     }

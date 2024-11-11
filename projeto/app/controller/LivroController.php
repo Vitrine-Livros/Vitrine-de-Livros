@@ -4,6 +4,7 @@ require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/LivroDAO.php");
 require_once(__DIR__ . "/../dao/GeneroDAO.php");
 require_once(__DIR__ . "/../service/LivroService.php");
+require_once(__DIR__ . "/../service/ArquivoService.php");
 require_once(__DIR__ . "/../model/Livro.php");
 require_once(__DIR__ . "/../model/Genero.php");
 require_once(__DIR__ . "/../model/enum/UsuarioTipo.php");
@@ -13,15 +14,17 @@ class LivroController extends Controller {
     private LivroDAO $livroDao;
     private GeneroDAO $generoDao;
     private LivroService $livroService;
+    private ArquivoService $arqService;
 
     //Método construtor do controller - será executado a cada requisição a está classe
     public function __construct() {
-        //if(! $this->usuarioLogado())
-        //    exit;
+        if(! $this->usuarioLogado())
+            exit;
 
         $this->livroDao = new LivroDAO();
         $this->generoDao = new GeneroDAO();
         $this->livroService = new LivroService();
+        $this->arqService = new ArquivoService();
 
         $this->handleAction();
     }
@@ -42,10 +45,12 @@ class LivroController extends Controller {
         $anoLancamento = trim($_POST['anoLancamento']) ? trim($_POST['anoLancamento']) : NULL;
         $editora = trim($_POST['editora']) ? trim($_POST['editora']) : NULL;
         $idGenero = trim($_POST['idGenero']) ? trim($_POST['idGenero']) : NULL;
-        $foto = trim($_POST['foto']) ? trim($_POST['foto']) : NULL;
         $linkCompra = trim($_POST['linkCompra']) ? trim($_POST['linkCompra']) : NULL;
         $resumo = trim($_POST['resumo']) ? trim($_POST['resumo']) : NULL;
-       
+        
+        $arquivoCapa = $_FILES["foto"];
+        $arquivoCapaAtual = trim($_POST['capaAtual']) ? trim($_POST['capaAtual']) : NULL;
+        
         //Cria objeto Livro
         $livro = new Livro();
         $livro->setNome($nome);
@@ -57,28 +62,41 @@ class LivroController extends Controller {
         $genero->setId($idGenero);
         $livro->setGenero($genero);
         
-        $livro->setFoto($foto);
         $livro->setLinkCompra($linkCompra);
         $livro->setResumo($resumo);
+        if($arquivoCapaAtual)
+            $livro->setFoto($arquivoCapaAtual);
 
         //Validar os dados
-        $erros = $this->livroService->validarDados($livro);
+        $erros = $this->livroService->validarDados($livro, $arquivoCapa);
         if(empty($erros)) {
-            //Persiste o objeto
-            try {
-                
-                if($dados["id"] == 0)  //Inserindo
-                    $this->livroDao->insert($livro);
-                else { //Alterando
-                    $livro->setId($dados["id"]);
-                    $this->livroDao->update($livro);
-                }
+            //Salvar a imagem da capa
+            if($arquivoCapa['size'] > 0) {
+                $nomeArquivo = $this->arqService->salvarArquivo($arquivoCapa);
+                if($nomeArquivo)
+                    $livro->setFoto($nomeArquivo);
+                else
+                    $erros = ["Erro ao salvar o arquivo da capa do livro."]; 
+            }  
+            
+            if(empty($erros)) {
+                //Persiste o objeto
+                try {
+                    
+                    if($dados["id"] == 0)  //Inserindo
+                        $this->livroDao->insert($livro);
+                    else { //Alterando
+                        $livro->setId($dados["id"]);
+                        $this->livroDao->update($livro);
+                    }
 
-                $this->list("", "Livro cadastrado com sucesso!");
-                exit;
-            } catch (PDOException $e) {
-                $erros = ["Erro ao salvar o livro no base de dados."];   
-                //print_r($e);             
+                    $this->list("", "Livro cadastrado com sucesso!");
+                    exit;
+                } catch (PDOException $e) {
+                    $erros = ["Erro ao salvar o livro no base de dados."];   
+                    //print_r($e);             
+                }
+            
             }
         }
 
@@ -130,10 +148,16 @@ class LivroController extends Controller {
         }               
     }
 
-    protected function listJson() {
-        $listaLivro = $this->livroDao->list();
-        $json = json_encode($listaLivro);
-        echo $json;
+    protected function detalhesLivro()  {
+        $livro = $this->findLivroById();
+        if(! $livro) {
+            echo "Livro inválido!";
+            exit;
+        }
+
+        $dados["livro"] = $livro;
+
+        $this->loadView("livro/livro.php", $dados);      
     }
 
     //Método para buscar o livro com base no ID recebido por parâmetro GET

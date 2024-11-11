@@ -17,7 +17,8 @@ class Livro {
     private ?string $resumo;
 
     public function __construct() {
-        $this->genero = null;        
+        $this->genero = null; 
+        $this->foto = null;        
     }
 
     public function getId(): ?int

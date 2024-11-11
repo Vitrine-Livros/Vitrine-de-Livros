@@ -32,6 +32,10 @@ define('SESSAO_USUARIO_NOME', "usuarioLogadoNome");
 define('SESSAO_USUARIO_EMAIL', "usuarioLogadoEmail");
 define('SESSAO_USUARIO_TIPO', "usuarioLogadoTipo");
 
+//Configurações de arquivos
+define("PATH_ARQUIVOS", __DIR__ . "/../../arquivos");
+define("URL_ARQUIVOS", BASEURL . "/../arquivos");
+
 //C:\xampp\htdocs\Vitrine-de-Livros\projeto\app\util\config.php
 
 

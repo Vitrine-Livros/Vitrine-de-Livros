@@ -1,0 +1,51 @@
+<?php
+#Nome do arquivo: livro/livro.php
+#Objetivo: interface para detalhar os dados de um livro
+
+require_once(__DIR__ . "/../include/header.php");
+require_once(__DIR__ . "/../include/menu.php");
+?>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <a href="<?= BASEURL ?>/controller/HomeController.php?action=home" >Voltar</a>
+
+            <h1><?= $dados["livro"]->getNome() ?></h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4"> <!-- Imagem -->
+            <img class="card-img-top" src="<?= URL_ARQUIVOS . "/" . $dados["livro"]->getFoto(); ?>" width="100%">
+        </div>
+
+        <div class="col-8"> <!-- Dados do livro -->
+            <div style="font-size: 24px;" class="text-muted mb-2">Atores: <?= $dados["livro"]->getAutores() ?></div>
+            
+            <div style="font-size: 24px;" class="text-muted mb-2">Ano de lançamento: <?= $dados["livro"]->getAnoLancamento() ?></div>
+            
+            <div style="font-size: 24px;" class="text-muted mb-2">Editora: <?= $dados["livro"]->getEditora() ?></div>
+
+            <div style="font-size: 24px;" class="text-muted mb-2"> <?= $dados["livro"]->getGenero()->getNome() ?></div>
+
+            <div style="font-size: 18px;" class="text-muted mb-2"><?= $dados["livro"]->getResumo() ?></div>
+
+            <div>
+                <a href="#" class="btn btn-primary">Curtir</a>
+
+                <a href="#" class="btn btn-danger">Lido</a>
+
+                <a href="<?= $dados["livro"]->getLinkCompra() ?>" target="_blank" class="btn btn-success">Comprar</a>
+            </div>
+        </div>
+
+        
+    </div>
+
+   
+</div>
+
+<?php  
+require_once(__DIR__ . "/../include/footer.php");
+?>

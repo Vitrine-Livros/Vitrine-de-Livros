@@ -26,15 +26,12 @@ require_once(__DIR__ . "/../include/menu.php");
             <table id="tabLivro" class='table table-striped table-bordered'>
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>Foto</th>
                         <th>Nome</th>
                         <th>Autores</th>
                         <th>AnoLancamento</th>
                         <th>Editora</th>
                         <th>Gênero</th>
-                        <th>Foto</th>
-                        <th>LinkCompra</th>
-                        <th>Resumo</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -42,15 +39,12 @@ require_once(__DIR__ . "/../include/menu.php");
                 <tbody>
                     <?php foreach($dados['lista'] as $livro): ?>
                         <tr>
-                            <td><?php echo $livro->getId(); ?></td>
+                            <td><img src="<?= URL_ARQUIVOS . "/" . $livro->getFoto(); ?>" height="50px"></td>
                             <td><?= $livro->getNome(); ?></td>
                             <td><?= $livro->getAutores(); ?></td>
                             <td><?= $livro->getAnoLancamento(); ?></td>
                             <td><?= $livro->getEditora(); ?></td>
                             <td><?= $livro->getGenero()->getNome(); ?></td>
-                            <td><?= $livro->getFoto(); ?></td>
-                            <td><?= $livro->getLinkCompra(); ?></td>
-                            <td><?= $livro->getResumo(); ?></td>
                             <td><a class="btn btn-primary" 
                                 href="<?= BASEURL ?>/controller/LivroController.php?action=edit&id=<?= $livro->getId() ?>">
                                 Alterar</a> 

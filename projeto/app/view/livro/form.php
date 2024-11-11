@@ -3,6 +3,7 @@
 #Objetivo: interface para listagem dos usuários do sistema
 
 require_once(__DIR__ . "/../include/header.php");
+require_once(__DIR__ . "/../include/menu.php");
 ?>
 
 <h3 class="text-center">
@@ -14,7 +15,7 @@ require_once(__DIR__ . "/../include/header.php");
     <div class="row" style="margin-top: 10px;">
         
         <div class="col-6">
-            <form id="frmLivro" method="POST" 
+            <form id="frmLivro" method="POST" enctype="multipart/form-data" 
                 action="<?= BASEURL ?>/controller/LivroController.php?action=save" >
                 <div class="form-group">
                     <label for="txtNome">Nome:</label>
@@ -60,11 +61,14 @@ require_once(__DIR__ . "/../include/header.php");
                 </div>
 
                 <div class="form-group">
-                    <label for="txtFoto">Foto:</label>
-                    <input class="form-control" type="text" id="txtFoto" name="foto" 
-                        maxlength="15" placeholder="Informe a Foto"
-                        value="<?php echo (isset($dados["livro"]) ? $dados["livro"]->getFoto() : ''); ?>"/>
+                    <label for="txtFoto">Capa:</label>
+                    <input class="form-control" type="file" name="foto" id="txtFoto" 
+                        accept="image/*" />                   
                 </div>
+
+                <?php if(isset($dados["livro"]) && $dados["livro"]->getFoto()): ?>
+                    <img src="<?= URL_ARQUIVOS . "/" . $dados["livro"]->getFoto(); ?>" height="150px">
+                <?php endif; ?>
 
                 <div class="form-group">
                     <label for="txtLinkCompra">Link para a compra:</label>
@@ -81,6 +85,9 @@ require_once(__DIR__ . "/../include/header.php");
 
                 <input type="hidden" id="hddId" name="id" 
                     value="<?= $dados['id']; ?>" />
+
+                <input type="hidden" id="hddCapaAtual" name="capaAtual" 
+                    value="<?= (isset($dados["livro"]) && $dados["livro"]->getFoto() ? $dados["livro"]->getFoto() : ''); ?>" />
 
                 <button type="submit" class="btn btn-success">Gravar</button>
                 <button type="reset" class="btn btn-danger">Limpar</button>
