@@ -32,11 +32,21 @@ require_once(__DIR__ . "/../include/menu.php");
             <div style="font-size: 18px;" class="text-muted mb-2"><?= $dados["livro"]->getResumo() ?></div>
 
             <div>
-                <a href="#" class="btn btn-primary">Curtir</a>
+                <?php if(! $dados["jaCurtido"]): ?>
+                    <a href="<?= BASEURL ?>/controller/LivroCurtidoController.php?action=insert&id_livro=<?= $dados["livro"]->getId() ?>" 
+                        class="btn btn-primary">Curtir</a>
+                <?php else: ?>
+                    <a href="<?= BASEURL ?>/controller/LivroCurtidoController.php?action=delete&id_livro=<?= $dados["livro"]->getId() ?>" 
+                        class="btn btn-secondary">Descurtir</a>
+                <?php endif; ?>
 
                 <a href="#" class="btn btn-danger">Lido</a>
 
                 <a href="<?= $dados["livro"]->getLinkCompra() ?>" target="_blank" class="btn btn-success">Comprar</a>
+            </div>
+
+            <div class="mt-5">
+                <?php require_once(__DIR__ . "/../include/msg.php"); ?>
             </div>
         </div>
 

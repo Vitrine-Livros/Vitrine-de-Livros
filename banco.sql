@@ -54,6 +54,8 @@ ALTER TABLE livro_curtido ADD CONSTRAINT fk_livro_curtido_livro
 FOREIGN KEY (id_livro) REFERENCES livro (id_livro);
 ALTER TABLE livro_curtido ADD CONSTRAINT fk_livro_curtido_usuario 
 FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario);
+ALTER TABLE livro_curtido ADD CONSTRAINT uk_livro_curtido
+UNIQUE (id_livro, id_usuario);
 
 CREATE TABLE livro_lido ( 
   id_livro_lido int AUTO_INCREMENT, 

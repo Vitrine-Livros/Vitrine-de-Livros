@@ -25,6 +25,21 @@ class LivroDAO
         return $this->mapLivro($result);
     }
 
+    public function listMaisCurtidosMes()
+    {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT l.*, g.nome AS nome_genero 
+                FROM livro l 
+                JOIN genero g ON (g.id_genero = l.id_genero)
+                ORDER BY l.nome";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        $result = $stm->fetchAll();
+
+        return $this->mapLivro($result);
+    }
+
     //Método para buscar um usuário por seu ID
     public function findById(int $id)
     {

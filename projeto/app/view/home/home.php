@@ -8,23 +8,21 @@ require_once(__DIR__ . "/../include/menu.php");
 
 <div class="container-fluid">
 
+    <div class="row mt-3">
+        <h2>Livros mais curtidos</h2>
+
+    </div>
+
+    <div class="row mt-3">
+        <h2>Livros mais lidos</h2>
+
+    </div>
 
     <div class="row mt-3 justify-content-center">
         <?php foreach ($dados['livros'] as $livro): ?>
             <div class="col-2 text-center mt-3">
-
-                <div class="card" style="width: 100%;">
-                    <a href="<?= BASEURL ?>/controller/LivroController.php?action=detalhesLivro&id=<?= $livro->getId() ?>"> 
-                        <img class="card-img-top" src="<?= URL_ARQUIVOS . "/" . $livro->getFoto(); ?>" height="300px">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $livro->getNome() ?></h5>
-                        <h6 class="card-subtitle mb-2 text-muted"><?php echo $livro->getAutores() ?></h6>
-                        <h7 class="card-subtitle mb-2 text-muted"><?php echo $livro->getAnoLancamento() ?></h7>
-                    </div>
-                </div>
+               <?php include(__DIR__ . "/../include/livro_card.php"); ?>
             </div>
-
         <?php endforeach; ?>
 
     </div>

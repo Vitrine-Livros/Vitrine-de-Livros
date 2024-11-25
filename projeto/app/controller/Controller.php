@@ -73,4 +73,16 @@ class Controller {
         return false;
     }
 
+    //Método que verifica se o usuário está logado
+    protected function getUsuarioLogadoId() {
+        //Habilitar o recurso de sessão no PHP nesta página
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+
+        if(isset($_SESSION[SESSAO_USUARIO_ID]))
+            return $_SESSION[SESSAO_USUARIO_ID];
+
+        return 0;
+    }
+
 }

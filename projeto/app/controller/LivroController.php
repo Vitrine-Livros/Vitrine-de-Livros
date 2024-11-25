@@ -2,6 +2,7 @@
 #Classe controller para Usuário
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/LivroDAO.php");
+require_once(__DIR__ . "/../dao/LivroCurtidoDAO.php");
 require_once(__DIR__ . "/../dao/GeneroDAO.php");
 require_once(__DIR__ . "/../service/LivroService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
@@ -12,6 +13,7 @@ require_once(__DIR__ . "/../model/enum/UsuarioTipo.php");
 class LivroController extends Controller {
 
     private LivroDAO $livroDao;
+    private LivroCurtidoDAO $livroCurtidoDao;
     private GeneroDAO $generoDao;
     private LivroService $livroService;
     private ArquivoService $arqService;
@@ -22,6 +24,7 @@ class LivroController extends Controller {
             exit;
 
         $this->livroDao = new LivroDAO();
+        $this->livroCurtidoDao = new LivroCurtidoDAO();
         $this->generoDao = new GeneroDAO();
         $this->livroService = new LivroService();
         $this->arqService = new ArquivoService();
@@ -157,7 +160,24 @@ class LivroController extends Controller {
 
         $dados["livro"] = $livro;
 
-        $this->loadView("livro/livro.php", $dados);      
+        $livroCurtido = $this->livroCurtidoDao->findByLivroUsuario($livro->getId(), $this->getUsuarioLogadoId());
+        $dados["jaCurtido"] = $livroCurtido ? true : false;
+        
+        $tipoMsg = 0;
+        if(isset($_GET['tipo_msg']))
+            $tipoMsg = $_GET['tipo_msg'];
+
+        $msgSucesso = "";
+        $msgErro = "";
+
+        if($tipoMsg == 1) //Sucesso curtida
+            $msgSucesso = "Livro curtido com sucesso.";
+        else if($tipoMsg == 2) //Sucesso descurtida
+            $msgSucesso = "Livro descurtido com sucesso.";
+        else if($tipoMsg == 3) //Erro 
+            $msgErro = "Erro ao curtir/descurtir o livro.";
+
+        $this->loadView("livro/livro.php", $dados, $msgErro, $msgSucesso);      
     }
 
     //Método para buscar o livro com base no ID recebido por parâmetro GET
@@ -169,6 +189,8 @@ class LivroController extends Controller {
         $livro = $this->livroDao->findById($id);
         return $livro;
     }
+
+
 
 }
 

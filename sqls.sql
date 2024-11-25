@@ -1,0 +1,1 @@
+SELECT id_livro FROM livro_curtido GROUP BY id_livro ORDER BY COUNT(id_livro_curtido) DESC LIMIT 6
