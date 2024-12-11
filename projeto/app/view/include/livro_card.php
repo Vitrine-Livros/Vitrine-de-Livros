@@ -12,6 +12,27 @@ if ($livro):
             <h5 class="card-title"><?php echo $livro->getNome() ?></h5>
             <h6 class="card-subtitle mb-2 text-muted"><?php echo $livro->getAutores() ?></h6>
             <h7 class="card-subtitle mb-2 text-muted"><?php echo $livro->getAnoLancamento() ?></h7>
+
+            <div>
+                <?php if($livro->getNumeroCurtidas() > 0): ?>
+                    <span class="badge badge-info">
+                        <img src="<?= BASEURL ?>/view/img/joinha.png" height="20px">
+                        <?= $livro->getNumeroCurtidas() ?>
+                    </span>
+                    
+                <?php endif; ?>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center text-center">
+                <div class="ratings">
+                    <i class="fa fa-star fa-xs rating-color"></i>
+                    <i class="fa fa-star fa-xs rating-color"></i>
+                    <i class="fa fa-star fa-xs rating-color"></i>
+                    <i class="fa fa-star fa-xs rating-color"></i>
+                    <i class="fa fa-star fa-xs"></i>
+                </div>                
+            </div>
+
         </div>
     </div>
 

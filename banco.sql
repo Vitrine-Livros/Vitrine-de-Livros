@@ -32,9 +32,9 @@ CREATE TABLE livro (
   id_livro int  NOT NULL AUTO_INCREMENT,
   nome varchar(100) NOT NULL, 
   autores varchar(200) NOT NULL, 
-  ano_lancamento INT,
+  ano_lancamento INT NOT NULL,
   editora varchar(45) NOT NULL,
-  id_genero int,
+  id_genero int NOT NULL,
   foto varchar(100) NOT NULL,
   link_compra varchar(200) NOT NULL,
   resumo TEXT,
@@ -44,10 +44,10 @@ ALTER TABLE livro ADD CONSTRAINT fk_livro_genero
 FOREIGN KEY (id_genero) REFERENCES genero (id_genero);
 
 CREATE TABLE livro_curtido ( 
-  id_livro_curtido int AUTO_INCREMENT, 
-  id_livro int, 
-  id_usuario int,
-  data DATE,
+  id_livro_curtido int NOT NULL AUTO_INCREMENT, 
+  id_livro int NOT NULL, 
+  id_usuario int NOT NULL,
+  data DATE NOT NULL,
   PRIMARY KEY (id_livro_curtido) 
 );
 ALTER TABLE livro_curtido ADD CONSTRAINT fk_livro_curtido_livro 
@@ -59,8 +59,9 @@ UNIQUE (id_livro, id_usuario);
 
 CREATE TABLE livro_lido ( 
   id_livro_lido int AUTO_INCREMENT, 
-  id_livro int , 
-  id_usuario int ,
+  id_livro int NOT NULL, 
+  id_usuario int NOT NULL,
+  data_atualizacao DATE NOT NULL,
   comentarios TEXT,
   avaliacao INT,
   PRIMARY KEY (id_livro_lido) 
@@ -69,6 +70,8 @@ ALTER TABLE livro_lido ADD CONSTRAINT fk_livro_lido_livro
 FOREIGN KEY (id_livro) REFERENCES livro (id_livro);
 ALTER TABLE livro_lido ADD CONSTRAINT fk_livro_lido_usuario 
 FOREIGN KEY (id_usuario) REFERENCES usuario (id_usuario);
+ALTER TABLE livro_lido ADD CONSTRAINT uk_livro_lido
+UNIQUE (id_livro, id_usuario);
 
 
 

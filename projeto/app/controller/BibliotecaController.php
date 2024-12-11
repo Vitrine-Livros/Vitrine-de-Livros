@@ -3,7 +3,7 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/LivroDAO.php");
 
-class HomeController extends Controller {
+class BibliotecaController extends Controller {
 
     private LivroDAO $livroDao;
 
@@ -19,20 +19,17 @@ class HomeController extends Controller {
         $this->handleAction();       
     }
 
-    protected function home() {
+    protected function list() {
         //Carregar a lista de livros
         //1- Buscar os livros do banco de dados (LivroDAO)
-
-        $dados['livros'] = $this->livroDao->list();
-
-        $dados['livrosMaisCurtidos'] = $this->livroDao->listMaisCurtidos();
+        $dados['livrosLidos'] = $this->livroDao->listLivrosLidosByUsuario($this->getUsuarioLogadoId());
 
         
         //echo "<pre>" . print_r($dados, true) . "</pre>";
-        $this->loadView("home/home.php", $dados);
+        $this->loadView("biblioteca/list.php", $dados);
     }
 
 }
 
-//Criar o objeto da classe HomeController
-new HomeController();
+//Criar o objeto da classe BibliotecaController
+new BibliotecaController();

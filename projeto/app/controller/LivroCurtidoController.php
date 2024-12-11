@@ -38,14 +38,14 @@ class LivroCurtidoController extends Controller {
         try {
             $this->livroCurtidoDao->insert($livroCurt);
 
-            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&tipo_msg=1&id=" . $livro->getId());
+            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&msg_curtido=1&id=" . $livro->getId());
             exit;
 
         } catch (PDOException $e) {
             //print_r($e);
             //exit;  
             
-            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&tipo_msg=3&id=" . $livro->getId());
+            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&msg_curtido=3&id=" . $livro->getId());
         }
     }
 
@@ -61,14 +61,14 @@ class LivroCurtidoController extends Controller {
         try {
             $this->livroCurtidoDao->deleteByLivroUsuario($livro->getId(), $this->getUsuarioLogadoId());
 
-            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&tipo_msg=2&id=" . $livro->getId());
+            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&msg_curtido=2&id=" . $livro->getId());
             exit;
 
         } catch (PDOException $e) {
             //print_r($e);
             //exit;  
             
-            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&tipo_msg=3&id=" . $livro->getId());
+            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&msg_curtido=3&id=" . $livro->getId());
         }
     }
 

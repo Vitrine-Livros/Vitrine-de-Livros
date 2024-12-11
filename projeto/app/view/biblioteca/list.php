@@ -9,27 +9,13 @@ require_once(__DIR__ . "/../include/menu.php");
 
 <div class="container-fluid">
 
-    <h2>Livros mais curtidos</h2>
+    <h2>Minha biblioteca</h2>
     <div class="row mt-3">
-        <?php foreach ($dados['livrosMaisCurtidos'] as $livro): ?>
+        <?php foreach ($dados['livrosLidos'] as $livro): ?>
             <div class="col-2 text-center mt-3">
                <?php include(__DIR__ . "/../include/livro_card.php"); ?>
             </div>
         <?php endforeach; ?>
-    </div>
-
-    <div class="row mt-3">
-        <h2>Livros mais lidos</h2>
-
-    </div>
-
-    <div class="row mt-3 justify-content-center">
-        <?php foreach ($dados['livros'] as $livro): ?>
-            <div class="col-2 text-center mt-3">
-               <?php include(__DIR__ . "/../include/livro_card.php"); ?>
-            </div>
-        <?php endforeach; ?>
-
     </div>
 
 </div>

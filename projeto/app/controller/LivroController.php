@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/LivroDAO.php");
 require_once(__DIR__ . "/../dao/LivroCurtidoDAO.php");
+require_once(__DIR__ . "/../dao/LivroLidoDAO.php");
 require_once(__DIR__ . "/../dao/GeneroDAO.php");
 require_once(__DIR__ . "/../service/LivroService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
@@ -14,6 +15,7 @@ class LivroController extends Controller {
 
     private LivroDAO $livroDao;
     private LivroCurtidoDAO $livroCurtidoDao;
+    private LivroLidoDAO $livroLidoDao;
     private GeneroDAO $generoDao;
     private LivroService $livroService;
     private ArquivoService $arqService;
@@ -25,6 +27,7 @@ class LivroController extends Controller {
 
         $this->livroDao = new LivroDAO();
         $this->livroCurtidoDao = new LivroCurtidoDAO();
+        $this->livroLidoDao = new LivroLidoDAO();
         $this->generoDao = new GeneroDAO();
         $this->livroService = new LivroService();
         $this->arqService = new ArquivoService();
@@ -162,21 +165,35 @@ class LivroController extends Controller {
 
         $livroCurtido = $this->livroCurtidoDao->findByLivroUsuario($livro->getId(), $this->getUsuarioLogadoId());
         $dados["jaCurtido"] = $livroCurtido ? true : false;
+
+        $livroLido = $this->livroLidoDao->findByLivroUsuario($livro->getId(), $this->getUsuarioLogadoId());
+        $dados["jaLido"] = $livroLido ? true : false;
         
-        $tipoMsg = 0;
-        if(isset($_GET['tipo_msg']))
-            $tipoMsg = $_GET['tipo_msg'];
+        $msgCurtido = 0;
+        if(isset($_GET['msg_curtido']))
+            $msgCurtido = $_GET['msg_curtido'];
+
+        $msgLido = 0;
+        if(isset($_GET['msg_lido']))
+            $msgLido = $_GET['msg_lido'];
 
         $msgSucesso = "";
         $msgErro = "";
 
-        if($tipoMsg == 1) //Sucesso curtida
+        if($msgCurtido == 1) //Sucesso curtida
             $msgSucesso = "Livro curtido com sucesso.";
-        else if($tipoMsg == 2) //Sucesso descurtida
+        else if($msgCurtido == 2) //Sucesso descurtida
             $msgSucesso = "Livro descurtido com sucesso.";
-        else if($tipoMsg == 3) //Erro 
+        else if($msgCurtido == 3) //Erro 
             $msgErro = "Erro ao curtir/descurtir o livro.";
 
+        else if($msgLido == 1) //Sucesso lido
+            $msgSucesso = "Livro lido com sucesso.";
+        else if($msgLido == 2) //Sucesso lido
+            $msgSucesso = "Livro não lido com sucesso.";
+        else if($msgLido == 3) //Erro 
+            $msgErro = "Erro ao ler/não ler o livro.";
+        
         $this->loadView("livro/livro.php", $dados, $msgErro, $msgSucesso);      
     }
 

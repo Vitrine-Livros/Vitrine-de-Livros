@@ -25,16 +25,35 @@ class LivroDAO
         return $this->mapLivro($result);
     }
 
-    public function listMaisCurtidosMes()
+    public function listMaisCurtidos()
     {
         $conn = Connection::getConn();
 
-        $sql = "SELECT l.*, g.nome AS nome_genero 
-                FROM livro l 
-                JOIN genero g ON (g.id_genero = l.id_genero)
-                ORDER BY l.nome";
+        $sql = "SELECT l.*, g.nome AS nome_genero, COUNT(lc.id_livro_curtido) AS num_curtidas
+                FROM livro_curtido lc 
+                    JOIN livro l ON (l.id_livro = lc.id_livro)
+                    JOIN genero g ON (g.id_genero = l.id_genero)
+                GROUP BY l.id_livro 
+                ORDER BY COUNT(id_livro_curtido) DESC, lc.data DESC 
+                LIMIT 6";
         $stm = $conn->prepare($sql);
         $stm->execute();
+        $result = $stm->fetchAll();
+
+        return $this->mapLivro($result);
+    }
+
+    public function listLivrosLidosByUsuario(int $idUsuario) {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT l.*, g.nome AS nome_genero 
+                FROM livro_lido ll
+                    JOIN livro l ON (l.id_livro = ll.id_livro)
+                    JOIN genero g ON (g.id_genero = l.id_genero)
+                WHERE ll.id_usuario = ?
+                ORDER BY ll.data_atualizacao DESC";
+        $stm = $conn->prepare($sql);
+        $stm->execute([$idUsuario]);
         $result = $stm->fetchAll();
 
         return $this->mapLivro($result);
@@ -177,9 +196,13 @@ class LivroDAO
             $livro->setFoto($reg['foto']);
             $livro->setLinkCompra($reg['link_compra']);
             $livro->setResumo($reg['resumo']);
+
+            if(isset($reg['num_curtidas'])) 
+                $livro->setNumeroCurtidas($reg['num_curtidas']);
+
             array_push($livros, $livro);
         }
-
+        
         return $livros;
     }
 }

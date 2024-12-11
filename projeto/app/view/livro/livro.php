@@ -40,7 +40,15 @@ require_once(__DIR__ . "/../include/menu.php");
                         class="btn btn-secondary">Descurtir</a>
                 <?php endif; ?>
 
-                <a href="#" class="btn btn-danger">Lido</a>
+                <?php if(! $dados["jaLido"]): ?>
+                    <a href="<?= BASEURL ?>/controller/LivroLidoController.php?action=insert&id_livro=<?= $dados["livro"]->getId() ?>" class="btn btn-danger">Ler</a>
+                <?php else: ?>
+                    <a href="<?= BASEURL ?>/controller/LivroLidoController.php?action=delete&id_livro=<?= $dados["livro"]->getId() ?>" class="btn btn-secondary">Não Ler</a>
+                <?php endif; ?>
+
+                <?php if($dados["jaLido"]): ?>
+                    <a href="<?= BASEURL ?>/controller/LivroLidoController.php?action=comentarAvaliar&id_livro=<?= $dados["livro"]->getId() ?>" class="btn btn-info">Comentar/Avaliar</a>
+                <?php endif; ?>
 
                 <a href="<?= $dados["livro"]->getLinkCompra() ?>" target="_blank" class="btn btn-success">Comprar</a>
             </div>
@@ -49,8 +57,14 @@ require_once(__DIR__ . "/../include/menu.php");
                 <?php require_once(__DIR__ . "/../include/msg.php"); ?>
             </div>
         </div>
+       
+    </div>
 
-        
+    <div class="row">
+        <div class="col-12">
+            <!-- Listar comentários -->
+            Comentários aqui!
+        </div>
     </div>
 
    

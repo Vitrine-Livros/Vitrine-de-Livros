@@ -16,9 +16,12 @@ class Livro {
     private ?string $linkCompra;
     private ?string $resumo;
 
+    private ?int $numeroCurtidas;
+
     public function __construct() {
         $this->genero = null; 
-        $this->foto = null;        
+        $this->foto = null; 
+        $this->numeroCurtidas = 0;       
     }
 
     public function getId(): ?int
@@ -125,6 +128,18 @@ class Livro {
     public function setGenero(?Genero $genero): self
     {
         $this->genero = $genero;
+
+        return $this;
+    }
+
+    public function getNumeroCurtidas(): ?int
+    {
+        return $this->numeroCurtidas;
+    }
+
+    public function setNumeroCurtidas(?int $numeroCurtidas): self
+    {
+        $this->numeroCurtidas = $numeroCurtidas;
 
         return $this;
     }

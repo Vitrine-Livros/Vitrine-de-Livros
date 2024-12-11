@@ -13,6 +13,10 @@ if(isset($_SESSION[SESSAO_USUARIO_NOME]))
                 <a class="nav-link" href="<?= HOME_PAGE ?>">Home</a>
             </li>
 
+            <li class="nav-item active">
+                <a class="nav-link" href="<?= BASEURL . '/controller/BibliotecaController.php?action=list' ?>">Minha biblioteca</a>
+            </li>
+
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
                 role="button" data-toggle="dropdown" aria-haspopup="true" 
