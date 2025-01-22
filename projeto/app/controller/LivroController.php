@@ -168,6 +168,8 @@ class LivroController extends Controller {
 
         $livroLido = $this->livroLidoDao->findByLivroUsuario($livro->getId(), $this->getUsuarioLogadoId());
         $dados["jaLido"] = $livroLido ? true : false;
+
+        $dados["comentarios"] = $this->livroLidoDao->listByLivro($livro->getId());
         
         $msgCurtido = 0;
         if(isset($_GET['msg_curtido']))

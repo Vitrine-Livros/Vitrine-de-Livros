@@ -34,7 +34,25 @@ class LivroDAO
                     JOIN livro l ON (l.id_livro = lc.id_livro)
                     JOIN genero g ON (g.id_genero = l.id_genero)
                 GROUP BY l.id_livro 
-                ORDER BY COUNT(id_livro_curtido) DESC, lc.data DESC 
+                ORDER BY COUNT(lc.id_livro_curtido) DESC, lc.data DESC 
+                LIMIT 6";
+        $stm = $conn->prepare($sql);
+        $stm->execute();
+        $result = $stm->fetchAll();
+
+        return $this->mapLivro($result);
+    }
+
+    public function listMaisLidos()
+    {
+        $conn = Connection::getConn();
+
+        $sql = "SELECT l.*, g.nome AS nome_genero, COUNT(ll.id_livro_lido) AS num_lidas
+                FROM livro_lido ll 
+                    JOIN livro l ON (l.id_livro = ll.id_livro)
+                    JOIN genero g ON (g.id_genero = l.id_genero)
+                GROUP BY l.id_livro 
+                ORDER BY COUNT(ll.id_livro_lido) DESC, ll.data_atualizacao DESC 
                 LIMIT 6";
         $stm = $conn->prepare($sql);
         $stm->execute();

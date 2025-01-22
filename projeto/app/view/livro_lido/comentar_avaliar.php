@@ -9,7 +9,7 @@ require_once(__DIR__ . "/../include/menu.php");
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <a href="<?= BASEURL ?>/controller/HomeController.php?action=home" >Voltar</a>
+            <a href="<?= BASEURL ?>/controller/LivroController.php?action=detalhesLivro&id=<?= $dados["livro"]->getId() ?>">Voltar</a>
 
             <h1>Comentar e avaliar</h1>
         </div>
@@ -38,28 +38,30 @@ require_once(__DIR__ . "/../include/menu.php");
     <div class="row mt-4">
         <div class="col-8">
             <!-- Formulário comentários -->
-            <form action="">
+            <form method="POST" action="<?= BASEURL ?>/controller/LivroLidoController.php?action=salvarComentarioAvaliacao">
                 <div class="form-group">
                     <label for="txtComentario">Comentário</label>
                     <textarea type="text" class="form-control" name="comentario" id="txtComentario"
-                        rows="5"></textarea>
+                        rows="5"><?= $dados['livroLido']->getComentario() ? $dados['livroLido']->getComentario() : '' ?></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="selAvaliacao">Avalição</label>
                     <select class="form-control" name="avaliacao" id="selAvaliacao">
                         <option value="">---Informe as estrelas---</option>
-                        <option value="1">1 estrela (muito ruim)</option>
-                        <option value="2">2 estrelas (ruim)</option>
-                        <option value="3">3 estrelas (bom)</option>
-                        <option value="4">4 estrelas (ótimo)</option>
-                        <option value="5">5 estrelas (excelente)</option>
+                        <option value="1" <?= $dados['livroLido']->getAvaliacao() == 1 ? 'selected' : '' ?>>1 estrela (muito ruim)</option>
+                        <option value="2" <?= $dados['livroLido']->getAvaliacao() == 2 ? 'selected' : '' ?>>2 estrelas (ruim)</option>
+                        <option value="3" <?= $dados['livroLido']->getAvaliacao() == 3 ? 'selected' : '' ?>>3 estrelas (bom)</option>
+                        <option value="4" <?= $dados['livroLido']->getAvaliacao() == 4 ? 'selected' : '' ?>>4 estrelas (ótimo)</option>
+                        <option value="5" <?= $dados['livroLido']->getAvaliacao() == 5 ? 'selected' : '' ?>>5 estrelas (excelente)</option>
                     </select>
                 </div>
 
                 <div>
                     <button class="btn btn-success">Gravar</button>
                 </div>
+
+                <input type="hidden" name="idLivro" value="<?= $dados["livro"]->getId() ?>">
             </form>
         </div>
 

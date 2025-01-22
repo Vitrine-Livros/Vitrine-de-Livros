@@ -17,11 +17,13 @@ class Livro {
     private ?string $resumo;
 
     private ?int $numeroCurtidas;
+    private ?int $numeroEstrelas;
 
     public function __construct() {
         $this->genero = null; 
         $this->foto = null; 
-        $this->numeroCurtidas = 0;       
+        $this->numeroCurtidas = 0;     
+        $this->numeroEstrelas = 0;  
     }
 
     public function getId(): ?int
@@ -140,6 +142,18 @@ class Livro {
     public function setNumeroCurtidas(?int $numeroCurtidas): self
     {
         $this->numeroCurtidas = $numeroCurtidas;
+
+        return $this;
+    }
+
+    public function getNumeroEstrelas(): ?int
+    {
+        return $this->numeroEstrelas;
+    }
+
+    public function setNumeroEstrelas(?int $numeroEstrelas): self
+    {
+        $this->numeroEstrelas = $numeroEstrelas;
 
         return $this;
     }

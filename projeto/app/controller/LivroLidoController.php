@@ -77,9 +77,45 @@ class LivroLidoController extends Controller {
             exit;
         }
 
+        $livroLido = $this->livroLidoDao->findByLivroUsuario($livro->getId(), $this->getUsuarioLogadoId());
+        if(! $livroLido) {
+            echo "Livro ainda não foi lido pelo usuário!";
+            exit;
+        }
+
         $dados["livro"] = $livro;
+        $dados["livroLido"] = $livroLido;
 
         $this->loadView("livro_lido/comentar_avaliar.php", $dados);  
+    }
+
+    protected function salvarComentarioAvaliacao() {
+        //Pegar os campos do formulário
+        $idLivro = $_POST["idLivro"];
+        $comentario = trim($_POST['comentario']) ? trim($_POST['comentario']) : NULL;
+        $avaliaco = is_numeric($_POST['avaliacao']) ? $_POST['avaliacao'] : NULL;
+
+        //Criar o objeto LivroLido
+        $livroLido = new LivroLido();
+        $livroLido->setIdLivro($idLivro);
+        $livroLido->setIdUsuario($this->getUsuarioLogadoId());
+        $livroLido->setComentario($comentario);
+        $livroLido->setAvaliacao($avaliaco);
+
+        //TODO - Validar os dados chamando o service (apenas comentário e avaliaçao)
+        
+
+
+        //Chamar o LivroLidoDAO para atualizar o comentário e a avaliaçáo
+        try {
+            $this->livroLidoDao->update($livroLido);
+
+            header("location: " . BASEURL . "/controller/LivroController.php?action=detalhesLivro&id=" . $idLivro);
+            exit;
+        } catch (PDOException $e) {
+            $erros = ["Erro ao salvar a avaliação na base de dados."];   
+            print_r($e);             
+        }
     }
 
     //Método para buscar o livro com base no ID recebido por parâmetro GET

@@ -24,7 +24,7 @@ require_once(__DIR__ . "/../include/menu.php");
     </div>
 
     <div class="row mt-3 justify-content-center">
-        <?php foreach ($dados['livros'] as $livro): ?>
+        <?php foreach ($dados['livrosMaisLidos'] as $livro): ?>
             <div class="col-2 text-center mt-3">
                <?php include(__DIR__ . "/../include/livro_card.php"); ?>
             </div>

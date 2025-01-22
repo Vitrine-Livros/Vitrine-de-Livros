@@ -23,13 +23,15 @@ if ($livro):
                 <?php endif; ?>
             </div>
 
-            <div class="d-flex justify-content-between align-items-center text-center">
-                <div class="ratings">
-                    <i class="fa fa-star fa-xs rating-color"></i>
-                    <i class="fa fa-star fa-xs rating-color"></i>
-                    <i class="fa fa-star fa-xs rating-color"></i>
-                    <i class="fa fa-star fa-xs rating-color"></i>
-                    <i class="fa fa-star fa-xs"></i>
+            <div class="d-flex justify-content-between">
+                <div class="ratings mx-auto">
+                    <?php for($i=1; $i<=5; $i++): ?>
+                        <?php if($livro->getNumeroEstrelas() >= $i): ?>
+                            <i class="fa fa-star fa-xs rating-color"></i>
+                        <?php else: ?>  
+                            <i class="fa fa-star fa-xs"></i> 
+                        <?php endif; ?>
+                    <?php endfor; ?>
                 </div>                
             </div>
 

@@ -60,10 +60,34 @@ require_once(__DIR__ . "/../include/menu.php");
        
     </div>
 
-    <div class="row">
+    <!-- Listar comentários -->
+    <div class="row mt-3">
         <div class="col-12">
-            <!-- Listar comentários -->
-            Comentários aqui!
+            <h4>Comentários</h4>
+        </div>          
+        
+        <div class="col-12">
+            
+            <?php foreach($dados["comentarios"] as $livroLido): ?>
+                <?php if(! $livroLido->getComentario()) continue;?>
+
+                <div class="row mb-2">
+                    <div class="col-1"></div>
+
+                    <div class="card col-10" style="width: 100%;">
+
+                        <div class="card-body">
+                            <p style="font-weight: bold" class="card-text"><?php echo $livroLido->getDadosComentario() ?></p>  
+
+                            <p class="card-text"><?php echo $livroLido->getComentarioHTML() ?></p>  
+                        </div>
+
+                    </div>
+
+                    <div class="col-1"></div>
+                </div>
+            <?php endforeach; ?>
+
         </div>
     </div>
 
