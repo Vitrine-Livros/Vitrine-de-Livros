@@ -29,7 +29,7 @@ require_once(__DIR__ . "/../include/menu.php");
             
             <div style="font-size: 24px;" class="text-muted mb-2">Editora: <?= $dados["livro"]->getEditora() ?></div>
 
-            <div style="font-size: 24px;" class="text-muted mb-2"> <?= $dados["livro"]->getGenero()->getNome() ?></div>
+            <div style="font-size: 24px;" class="text-muted mb-2">Gênero: <?= $dados["livro"]->getGenero()->getNome() ?></div>
 
             <div style="font-size: 18px;" class="text-muted mb-2"><?= $dados["livro"]->getResumo() ?></div>
        </div>

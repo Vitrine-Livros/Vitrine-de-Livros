@@ -6,15 +6,15 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 
-<h3 class="text-center">
-    Cadastro de livro
-</h3>
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/livro_detalhes.css">
+
+<h3 class="text-center titulo-secao">Cadastro de livro</h3>
 
 <div class="container">
     
     <div class="row" style="margin-top: 10px;">
         
-        <div class="col-6">
+        <div class="col-6 titulo-secao">
             <form id="frmLivro" method="POST" enctype="multipart/form-data" 
                 action="<?= BASEURL ?>/controller/LivroController.php?action=save" >
                 <div class="form-group">

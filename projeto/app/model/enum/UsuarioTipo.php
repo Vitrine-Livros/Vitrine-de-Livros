@@ -6,7 +6,7 @@ class UsuarioTipo {
 
     public static string $SEPARADOR = "|";
 
-    const ADMINISTRADOR = "ADMINISTRADOR";
+    const ADMINISTRADOR = "ADMINSTRADOR";
     const LEITOR = "LEITOR";
 
     public static function getAllAsArray() {

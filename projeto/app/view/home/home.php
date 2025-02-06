@@ -6,6 +6,7 @@ require_once(__DIR__ . "/../include/menu.php");
 ?>
 
 <link rel="stylesheet" href="<?= BASEURL ?>/view/css/livro_card.css">
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/estrelas.css">
 
 <div class="container-fluid principal" id="???">
 

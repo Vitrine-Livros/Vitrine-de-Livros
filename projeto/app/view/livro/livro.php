@@ -6,12 +6,15 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/estrelas.css">
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/livro_detalhes.css">
+
 <div class="container">
     <div class="row">
         <div class="col-12">
             <a href="<?= BASEURL ?>/controller/HomeController.php?action=home" >Voltar</a>
 
-            <h1><?= $dados["livro"]->getNome() ?></h1>
+            <h1 class="titulo-secao"><?= $dados["livro"]->getNome() ?></h1>
         </div>
     </div>
 
@@ -21,15 +24,15 @@ require_once(__DIR__ . "/../include/menu.php");
         </div>
 
         <div class="col-8"> <!-- Dados do livro -->
-            <div style="font-size: 24px;" class="text-muted mb-2">Atores: <?= $dados["livro"]->getAutores() ?></div>
+            <div style="font-size: 24px;" class="titulo-secao mb-2">Atores: <?= $dados["livro"]->getAutores() ?></div>
             
-            <div style="font-size: 24px;" class="text-muted mb-2">Ano de lançamento: <?= $dados["livro"]->getAnoLancamento() ?></div>
+            <div style="font-size: 24px;" class="titulo-secao mb-2">Ano de lançamento: <?= $dados["livro"]->getAnoLancamento() ?></div>
             
-            <div style="font-size: 24px;" class="text-muted mb-2">Editora: <?= $dados["livro"]->getEditora() ?></div>
+            <div style="font-size: 24px;" class="titulo-secao mb-2">Editora: <?= $dados["livro"]->getEditora() ?></div>
 
-            <div style="font-size: 24px;" class="text-muted mb-2"> <?= $dados["livro"]->getGenero()->getNome() ?></div>
+            <div style="font-size: 24px;" class="titulo-secao mb-2">Gênero: <?= $dados["livro"]->getGenero()->getNome() ?></div>
 
-            <div style="font-size: 18px;" class="text-muted mb-2"><?= $dados["livro"]->getResumo() ?></div>
+            <div style="font-size: 18px;" class="titulo-secao mb-2"><?= $dados["livro"]->getResumo() ?></div>
 
             <div>
                 <?php if(! $dados["jaCurtido"]): ?>
@@ -62,8 +65,8 @@ require_once(__DIR__ . "/../include/menu.php");
 
     <!-- Listar comentários -->
     <div class="row mt-3">
-        <div class="col-12">
-            <h4>Comentários</h4>
+        <div class="col-12 mb-2">
+            <h4 class="titulo-secao">Comentários</h4>
         </div>          
         
         <div class="col-12">
@@ -77,6 +80,18 @@ require_once(__DIR__ . "/../include/menu.php");
                     <div class="card col-10" style="width: 100%;">
 
                         <div class="card-body">
+                            <div class="d-flex justify-content-between float-right">
+                                <div class="ratings">
+                                    <?php for($i=1; $i<=5; $i++): ?>
+                                        <?php if($livroLido->getAvaliacao() >= $i): ?>
+                                            <i class="fa fa-star fa-xs rating-color"></i>
+                                        <?php else: ?>  
+                                            <i class="fa fa-star fa-xs"></i> 
+                                        <?php endif; ?>
+                                    <?php endfor; ?>
+                                </div>                
+                            </div>
+
                             <p style="font-weight: bold" class="card-text"><?php echo $livroLido->getDadosComentario() ?></p>  
 
                             <p class="card-text"><?php echo $livroLido->getComentarioHTML() ?></p>  

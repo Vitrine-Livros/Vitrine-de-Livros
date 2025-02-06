@@ -6,7 +6,9 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 
-<h3 class="text-center">Usuários</h3>
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/livro_detalhes.css">
+
+<h3 class="text-center titulo-secao">Usuários</h3>
 
 <div class="container">
     <div class="row">
@@ -22,7 +24,7 @@ require_once(__DIR__ . "/../include/menu.php");
     </div>
 
     <div class="row" style="margin-top: 10px;">
-        <div class="col-12">
+        <div class="titulo-secao col-12">
             <table id="tabUsuarios" class='table table-striped table-bordered'>
                 <thead>
                     <tr>

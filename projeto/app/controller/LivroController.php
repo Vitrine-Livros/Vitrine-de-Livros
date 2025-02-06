@@ -36,6 +36,11 @@ class LivroController extends Controller {
     }
 
     protected function list(string $msgErro = "", string $msgSucesso = "") {
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
+        
         $livro = $this->livroDao->list();
         //print_r($livro);
         $dados["lista"] = $livro;
@@ -44,6 +49,11 @@ class LivroController extends Controller {
     }
 
     protected function save() {
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
+
         //Captura os dados do formulário
         $dados["id"] = isset($_POST['id']) ? $_POST['id'] : 0;
         $nome = trim($_POST['nome']) ? trim($_POST['nome']) : NULL;
@@ -118,7 +128,10 @@ class LivroController extends Controller {
 
     //Método create
     protected function create() {
-        //echo "Chamou o método create!";
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
 
         $dados["id"] = 0;
         $dados["generos"] = $this->generoDao->list();
@@ -127,6 +140,11 @@ class LivroController extends Controller {
 
     //Método edit
     protected function edit() {
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
+
         $livro = $this->findLivroById();
         
         if($livro) {
@@ -142,6 +160,11 @@ class LivroController extends Controller {
 
     //Método para excluir
     protected function delete() {
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
+
         $livro = $this->findLivroById();
         if($livro) {
             //Excluir
@@ -199,6 +222,26 @@ class LivroController extends Controller {
         $this->loadView("livro/livro.php", $dados, $msgErro, $msgSucesso);      
     }
 
+    public function pesquisarLivros() {
+        //Capturar o filtro
+        $filtro = "";
+        if(isset($_GET['filtro']))
+            $filtro = trim($_GET['filtro']);
+
+        $dados['filtro'] = $filtro ? $filtro : '[Não informado]';
+
+        $dados['livrosEncontrados'] = $this->livroDao->listByLivro($filtro);
+        foreach($dados['livrosEncontrados'] as $livro) {
+            $this->livroService->carregarEstrelas($livro);
+        }
+        
+        $msgErro = "";
+        if(! $dados['livrosEncontrados'])
+            $msgErro = "Nenhum livro encontrado!";
+
+        $this->loadView("livro/pesquisa.php", $dados, $msgErro);    
+    }
+
     //Método para buscar o livro com base no ID recebido por parâmetro GET
     private function findLivroById() {
         $id = 0;
@@ -208,8 +251,6 @@ class LivroController extends Controller {
         $livro = $this->livroDao->findById($id);
         return $livro;
     }
-
-
 
 }
 

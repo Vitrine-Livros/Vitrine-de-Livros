@@ -6,7 +6,9 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 
-<h3 class="text-center">
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/usuario.css">
+
+<h3 class="text-center titulo-secao">
     Cadastro de usuário
 </h3>
 
@@ -14,7 +16,7 @@ require_once(__DIR__ . "/../include/menu.php");
     
     <div class="row" style="margin-top: 10px;">
         
-        <div class="col-6">
+        <div class="col-6 titulo-secao">
             <form id="frmUsuario" method="POST" 
                 action="<?= BASEURL ?>/controller/UsuarioController.php?action=save" >
                 <div class="form-group">

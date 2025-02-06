@@ -3,7 +3,7 @@ body {
     /* background-color: #1c5a4f !important; */
     
     /* Fundo com IMAGEM */
-    background: url("https://getwallpapers.com/wallpaper/full/4/3/5/165818.jpg") no-repeat center center fixed;
+    background: url("../img/fundo_livro.jpg") no-repeat center center fixed;
     background-size: cover;
 
 }
@@ -11,7 +11,6 @@ body {
 /* COR DOS TITULOS DAS PÁGINAS */
 .titulo-secao {
     color: #ffffff;
-    margin-top: 50px;
 }
 
 

@@ -4,6 +4,7 @@
 
 require_once(__DIR__ . "/enum/UsuarioTipo.php");
 
+
 class Usuario {
 
     private ?int $id;

@@ -23,6 +23,15 @@ if ($livro):
                 <?php endif; ?>
             </div>
 
+            <div>
+                <?php if($livro->getNumeroLidas() > 0): ?>
+                    <span class="badge badge-danger">
+                        <img src="<?= BASEURL ?>/view/img/olho.png" height="20px">
+                        <?= $livro->getNumeroLidas() ?>
+                    </span>
+                <?php endif; ?>
+            </div>
+
             <div class="d-flex justify-content-between">
                 <div class="ratings mx-auto">
                     <?php for($i=1; $i<=5; $i++): ?>

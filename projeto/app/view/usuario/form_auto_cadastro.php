@@ -5,15 +5,17 @@
 require_once(__DIR__ . "/../include/header.php");
 ?>
 
-<h3 class="text-center">
-    Faça seu cadastro
+<link rel="stylesheet" href="<?= BASEURL ?>/view/css/usuario.css">
+
+<h3 class="text-center titulo-secao">
+        Faça seu cadastro
 </h3>
 
 <div class="container">
     
     <div class="row" style="margin-top: 10px;">
         
-        <div class="col-6">
+        <div class="col-6 titulo-secao">
             <form id="frmUsuario" method="POST" 
                 action="<?= BASEURL ?>/controller/UsuarioController.php?action=save" >
                 <div class="form-group">

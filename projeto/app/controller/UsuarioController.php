@@ -24,6 +24,10 @@ class UsuarioController extends Controller {
             exit;
 
         //Tratar para apenas ADMIN listar os usuário
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
 
         $usuarios = $this->usuarioDao->list();
         //print_r($usuarios);
@@ -101,6 +105,11 @@ class UsuarioController extends Controller {
         if(! $this->usuarioLogado())
             exit;
 
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
+
         $dados["id"] = 0;
         $dados["tipo"] = UsuarioTipo::getAllAsArray(); 
         $this->loadView("usuario/form.php", $dados);
@@ -110,6 +119,11 @@ class UsuarioController extends Controller {
     protected function edit() {
         if(! $this->usuarioLogado())
             exit;
+
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
 
         $usuario = $this->findUsuarioById();
         
@@ -130,6 +144,11 @@ class UsuarioController extends Controller {
     protected function delete() {
         if(! $this->usuarioLogado())
             exit;
+
+        if(! $this->usuarioLogadoIsAdministrador()) {
+            echo "Acessso negado!";
+            exit;
+        }
 
         $usuario = $this->findUsuarioById();
         if($usuario) {

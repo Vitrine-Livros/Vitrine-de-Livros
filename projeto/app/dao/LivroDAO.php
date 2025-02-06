@@ -25,6 +25,25 @@ class LivroDAO
         return $this->mapLivro($result);
     }
 
+    public function listByLivro(string $filtro) {
+        if(! $filtro)
+            return array();
+
+        $conn = Connection::getConn();
+
+        $sql = "SELECT l.*, g.nome AS nome_genero 
+                FROM livro l 
+                JOIN genero g ON (g.id_genero = l.id_genero)
+                WHERE l.nome LIKE ? COLLATE utf8_general_ci
+                    OR g.nome = ? COLLATE utf8_unicode_ci
+                ORDER BY l.nome";
+        $stm = $conn->prepare($sql);
+        $stm->execute(['%'.$filtro.'%', $filtro]);
+        $result = $stm->fetchAll();
+
+        return $this->mapLivro($result);
+    }
+
     public function listMaisCurtidos()
     {
         $conn = Connection::getConn();
@@ -98,33 +117,6 @@ class LivroDAO
             return null;
 
         die("LivroDAO.findById()" .
-            " - Erro: mais de um livro encontrado.");
-    }
-
-
-    //Método para buscar um usuário por seu email e senha
-    public function findByEmailSenha(string $email, string $senha)
-    {
-        $conn = Connection::getConn();
-
-        $sql = "SELECT * FROM livro l" .
-            " WHERE BINARY u.email = ?";
-        $stm = $conn->prepare($sql);
-        $stm->execute([$email]);
-        $result = $stm->fetchAll();
-
-        $livro = $this->mapLivro($result);
-
-        if (count($livro) == 1) {
-            //Tratamento para senha criptografada
-            if (password_verify($senha, $livro[0]->getSenha()))
-                return $livro[0];
-            else
-                return null;
-        } elseif (count($livro) == 0)
-            return null;
-
-        die("LivroDAO.findByEmailSenha()" .
             " - Erro: mais de um livro encontrado.");
     }
 
@@ -217,6 +209,9 @@ class LivroDAO
 
             if(isset($reg['num_curtidas'])) 
                 $livro->setNumeroCurtidas($reg['num_curtidas']);
+
+            if(isset($reg['num_lidas'])) 
+                $livro->setNumeroLidas($reg['num_lidas']);
 
             array_push($livros, $livro);
         }
